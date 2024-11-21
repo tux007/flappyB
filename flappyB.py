@@ -1,11 +1,12 @@
-import os
 from ursina import *
 
+window.title = "Flöppy Game"
 app = Ursina()
-Sky()
+
+window.exit_button.enabled = True
+
 bird = Animation('assets/bird_blue', scale=2, collider='box')
-
-
+#Animation('assets/game_over', scale=20, position=(1, 1))
 camera.orthographic = True
 camera.fov = 20
 
@@ -13,16 +14,16 @@ def update():
     bird.y = bird.y -0.1
     for pipe in pipes:
         pipe.x = pipe.x - 0.05
-    if bird.y < -10:
-        Animation('assets/game_over.png', scale=20, position=(1, 1))
+    if bird.y < -10:   
+        time.sleep(3)
         quit()       
         
     if bird.y > 10:
-        Animation('assets/game_over.png', scale=20, position=(1, 1))
+        time.sleep(3)
         quit()
 
     if bird.intersects().hit:
-        Animation('assets/game_over.png', scale=20, position=(1, 1))
+        time.sleep(3)
         quit()
 
 def input(key):
@@ -46,5 +47,8 @@ def createPipes():
     pipes.append(newPipe2)
     invoke(createPipes, delay=5)
 
+ 
+
 createPipes()
+Sky()
 app.run()
